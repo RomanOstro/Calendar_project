@@ -6,3 +6,4 @@ export * from "./getWeekNumber";
 export * from "./getMonthNames";
 export * from "./getWeekDaysNames";
 export * from "./checkIsToday";
+export * from './getDeysDifference'

@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { NavButton, NavButtonText, NavCalendar, PopoverBlock, PopoverWrapper } from "./styleCalendar"
 import { AbcoluteCalendar } from "../AbcoluteCalendar/AbcoluteCalendar"
-import { useCalendar } from "../hooks/useCalendar"
 import type { TCalendarDays } from "../hooks/types"
+import { CalendarContext } from "../../utils/providers/calendarProvider"
+
 
 const navCalendarState = {
   ABSOLUTE: 'absolute',
@@ -14,21 +15,38 @@ type TCalendarState = typeof navCalendarState[keyof typeof navCalendarState]
 
 interface ICalendarProps {
   anchorEl: HTMLElement | null;
+  setDate: (date: Date) => void;
+  startDate?: Date;
+  endDate?: Date;
 }
 
 export const Calendar = (props: ICalendarProps) => {
-  const { anchorEl } = props;
+  const { anchorEl, setDate, startDate } = props;
 
+  const calendar = useContext(CalendarContext);
+  if (!calendar) throw Error('Can not fined CalendarContext')
+  const { calendar: { state, functions }, setCurrentDate, type } = calendar;
   const [navState, setNavState] = useState<TCalendarState>(navCalendarState.ABSOLUTE)
-  const { state, functions } = useCalendar({ selectedDate: new Date(), firstWeekDay: 2 }); //хук с функционалом календаря
 
   const hendlerNav = (type: TCalendarState) => {
     setNavState((prev) => prev === type ? prev : type);
   }
 
   const hendlerSelectDay = (day: TCalendarDays) => {
-    functions.setSelectedDate(day)
+    if (type === 'start') {
+      setCurrentDate(day.date)
+      setDate(day.date)
+    } else {
+      if (startDate && day.date < startDate) {
+        setCurrentDate(startDate)
+        setDate(startDate)
+      } else {
+        setCurrentDate(day.date)
+        setDate(day.date)
+      }
+    }
   }
+
 
   const selectMonthName = state.monthNames[state.selectedMonth.monthIndex].month // название выбранного месяца
   const selectYear = state.selectedYear // выбранный год

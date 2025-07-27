@@ -1,28 +1,37 @@
-import { createContext, useMemo, type ReactNode } from "react"
+import { createContext, useMemo, useState, type ReactNode } from "react"
 import type { TUseCalendar } from "../../components/hooks/types";
 import { useCalendar } from "../../components/hooks/useCalendar";
 
 interface ICalenrarContext {
   calendar: TUseCalendar;
-  type?: 'start' | 'end'
+  type?: 'start' | 'end',
+  setCurrentDate: React.Dispatch<React.SetStateAction<Date>>;
+  currentDate: Date;
 }
-const CalendarContext = createContext<ICalenrarContext | null>(null);
+
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const CalendarContext = createContext<ICalenrarContext | null>(null);
 
 interface ICalenparProviderProps {
   children: ReactNode;
-  initialDate: Date;
+  initialDate?: Date;
   type?: 'start' | 'end'
 }
 
 export const CalenparProvider = (props: ICalenparProviderProps) => {
-  const { children, initialDate = new Date(), type } = props;
+  const { children, initialDate, type } = props;
+  const date = initialDate ? initialDate : new Date();
+  const [currentDate, setCurrentDate] = useState<Date>(date)
 
-  const calendar = useCalendar({ selectedDate: initialDate, firstWeekDay: 2 })
+  const calendar = useCalendar({ selectedDate: currentDate, firstWeekDay: 2 })
 
   const contextValue = useMemo(() => ({
     calendar,
-    type
-  }), [calendar, type]);
+    type,
+    setCurrentDate,
+    currentDate
+  }), [calendar, type, currentDate]);
 
   return (
     <CalendarContext.Provider value={contextValue}>

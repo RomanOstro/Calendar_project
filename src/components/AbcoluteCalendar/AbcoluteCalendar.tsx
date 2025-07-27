@@ -15,7 +15,7 @@ interface IAbcoluteCalendarProps {
   handlerPrevMonth: () => void;
 }
 
-export const AbcoluteCalendar = ({ weekDaysNames, title, calendarDays, currentMonthIndex, 
+export const AbcoluteCalendar = ({ weekDaysNames, title, calendarDays, currentMonthIndex,
   onClick, selectedDay, handlerNextMonth, handlerPrevMonth }: IAbcoluteCalendarProps) => {
 
   return (
