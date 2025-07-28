@@ -3,6 +3,7 @@ interface getDeysDifferenceArg {
   end: Date;
 }
 
+// функция для расчета количества дней между выбранными датами
 export const getDeysDifference = ({
   start,
   end,

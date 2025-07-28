@@ -16,7 +16,7 @@ interface IUseCalendarProps {
 export const useCalendar = ({
   locale = "default",
   selectedDate: date,
-  firstWeekDay = 2,
+  firstWeekDay = 2, //параметр  firstWeekDay устанавливает формат недели 2 - неделя начинается с понедельника/1 - с воскресенья
 }: IUseCalendarProps) => {
   const [selectedDate, setSelectedDate] = useState(createDate({ date }));
   const [selectedMonth, setSelectedMonth] = useState(
@@ -32,7 +32,7 @@ export const useCalendar = ({
 
   const days = useMemo(() => selectedMonth.createMonthDays(), [selectedMonth]);
 
-  //---calendarDays---START
+  //---calendarDays---START // функция для рассчета кол-ва дней отображаемых на оном поле календаря
   const calendarDays = useMemo(() => {
     const daysOfMonth = getMonthNumberOfDays({
       monthIndex: selectedMonth.monthIndex,
@@ -94,6 +94,7 @@ export const useCalendar = ({
   }, [selectedMonth.monthIndex, selectedYear, locale]);
   //---calendarDays---END
 
+  //обновление календаря - установка новой даты в стейт каледнаря
   const updateCalendarStates = (date: Date) => {
     const newDateObj = createDate({ date });
     setSelectedDate(newDateObj);
@@ -105,13 +106,15 @@ export const useCalendar = ({
     );
     setSelectedYear(newDateObj.year);
   };
-  
+
+  //переключение календаря на месяц вперед
   const arrowNextMonth = () => {
     const nextMonthIndex = selectedDate.monthIndex + 1;
     const newDate = new Date(selectedDate.year, nextMonthIndex);
     updateCalendarStates(newDate);
   };
 
+  //переключение календаря на месяц назад
   const arrowPrevMonth = () => {
     const nextMonthIndex = selectedDate.monthIndex - 1;
     const newDate = new Date(selectedDate.year, nextMonthIndex);

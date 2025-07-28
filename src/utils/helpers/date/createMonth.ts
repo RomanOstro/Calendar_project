@@ -6,6 +6,7 @@ interface ICreateMonthProps {
   date?: Date;
 }
 
+// функция для работы с месяцами
 export const createMonth = (arg: ICreateMonthProps) => {
   if (!arg) arg = {};
   const locale = arg.locale ?? "default";
@@ -19,6 +20,7 @@ export const createMonth = (arg: ICreateMonthProps) => {
     return createDate({ date: new Date(year, monthIndex, dayNumber), locale });
   };
 
+    //генерируем массив объектов для каждого дня в месяце
   const createMonthDays = () => {
     const days = [];
     const daysIsMonth = getMonthNumberOfDays({ monthIndex, yearNumber: year });

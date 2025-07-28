@@ -7,6 +7,7 @@ interface ICreateYearProps {
   monthNumber?: number;
 }
 
+//функция для генерации месяцев в году, в каждом месяце список дней и объект с данными о каждом дне
 export const createYear = (arg: ICreateYearProps) => {
   const locale = arg.locale ?? "default";
 

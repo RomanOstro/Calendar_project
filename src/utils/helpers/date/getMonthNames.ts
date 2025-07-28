@@ -7,6 +7,7 @@ export interface ImonthesNames {
   date: Date;
 }
 
+// функция для генерации объекта с информацией о каждом месяце(индекс месяца/название месяца/короткое название месяца)
 export const getMonthNames = (locale: string = "default"): ImonthesNames[] => {
   const monthesNames: Array<ImonthesNames> = [];
 

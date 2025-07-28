@@ -5,8 +5,6 @@ import { spacing } from "../../styles/tokens/spacing";
 
 export const CalendarBody = styled.div`
   padding: 5px;
-
-
 `;
 
 export const CalendarHeading = styled.div`

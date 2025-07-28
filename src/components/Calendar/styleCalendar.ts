@@ -16,12 +16,11 @@ export const PopoverWrapper = styled.div<IPopoverProps>`
   position: absolute;
   left: ${({ $left }) => ($left ? `${$left}px` : "50%")};
   top: ${({ $top }) => ($top ? `${$top}px` : "50%")};
-  inline-size: 400px;
-  min-block-size: 300px;
   max-block-size: 100%;
-  transform: translate(0, -105%);
 `;
-export const PopoverBlock = styled.div`
+export const PopoverBlock = styled.div.attrs({
+  className: "popover-calendar",
+})<{ $type: "start" | "end" | undefined }>`
   position: absolute;
   inline-size: 400px;
   min-block-size: 300px;
@@ -29,6 +28,7 @@ export const PopoverBlock = styled.div`
   background: var(--background-color);
   inset: 0;
   border-radius: 5px;
+  transform: translate(0, -105%);
 
   &::before {
     content: "";
@@ -40,6 +40,21 @@ export const PopoverBlock = styled.div`
     left: 45%;
     transform: rotate(45deg);
     z-index: -1;
+  }
+  @media (width <= 700px) {
+    inline-size: 300px;
+    min-block-size: 250px;
+    ${({ $type }) =>
+      $type === "start"
+        ? "transform:translate(-10%, -105%);"
+        : $type === "end"
+        ? "transform: translate(-35%, -105%);"
+        : ""}
+  }
+
+  @media (width <= 480px) {
+    inline-size: 250px;
+    min-block-size: 250px;
   }
 `;
 

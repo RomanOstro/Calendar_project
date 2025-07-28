@@ -5,6 +5,7 @@ interface ICreateDateProps {
   date?: Date;
 }
 
+//формирует объект с ключами объекта Date, для нужной даты
 export const createDate = (arg: ICreateDateProps) => {
   if (!arg) arg = {};
   const locale = arg.locale ?? "default";
